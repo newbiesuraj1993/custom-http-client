@@ -12,11 +12,6 @@ export class CustomHttpClient {
     'Content-Type': 'application/json; charset=utf-8',
   });
 
-  httpOptionsBlob = new HttpHeaders({
-    responseType: 'blob',
-    observe: 'response',
-  });
-
   constructor(private http: HttpClient, private router: Router) {}
 
   get(url: string): any {
@@ -39,18 +34,7 @@ export class CustomHttpClient {
     return this.http.put(url, request).pipe(catchError(this.handleHttpErrors));
   }
 
-  getBlob(url: string): any {
-    return this.http
-      .get(url, { headers: this.httpOptionsBlob })
-      .pipe(catchError(this.handleHttpErrors));
-  }
-
-  multipartPost(url: string, formData: FormData): any {
-    return this.http
-      .post(url, formData)
-      .pipe(catchError(this.handleHttpErrors));
-  }
-
+  
   private handleHttpErrors(error: Response) {
     switch (error.status) {
       case 503 || 500:
